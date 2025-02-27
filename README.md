@@ -4,9 +4,7 @@
 
 **Description**
 
-This is the Clash Royale Deck-Builder Project, where the aim of the project is to create a Python-based application that will create custom decks based on 1-3 user-chosen cards for the game Clash Royale. Using a simple synergy system, this project lets users build their decks even faster by allowing them to add kits they love instantly while making sure their individual synergies work together. Specifically, the generated deck includes eight cards, with the user-specified cards at its center. Whether you're a novice seeking to explore new combinations or a seasoned competitor seeking to explore various forms of synergy, this project can assist you in getting started.
-
-This app satisfies several key requirements detailed for our last Python project:
+This is the Clash Royale Deck-Builder Project, where the aim of the project is to create a Python-based code that will create custom decks based on 1-3 user-chosen cards for the game Clash Royale. Using a synergy system, this project lets users build their decks by allowing them to add cards they want to use while making sure their individual synergies work together. The generated deck includes eight cards, with the user-specified cards at its center. 
 
 **Structure & Functions**
 
@@ -29,28 +27,28 @@ To test each function, name the test function according to test_.
 **Packaging & Requirements**
 The requirements.txt file in the project's root folder contains all the external or pip-installable libraries we depend on. For instance, in this file we have included pytest because we use that to run our test suite.
 
-**What This Project Is**
-The Clash Royale Deck-Builder Project is fundamentally a deck generator that makes card suggestions based on a synergy dictionary. Clash Royale is a Supercell mobile game where players fight opponents using decks of eight cards. Deck-building is a subtle art involving combinations of tanks, support units, spells, and defensive buildings. We automate part of the synergy logic, providing users a straightforward way to find new (or less obvious) card pairings.
+**Project Description**
+The Clash Royale Deck-Builder Project is a deck generator that put cards together based on a synergy dictionary. Clash Royale is a Supercell mobile game where players fight opponents using decks of eight cards. Deck-building is involved combining of tanks, support units, spells, and defensive buildings. We automated part of the synergy logic, providing users a straightforward way to find new (or less obvious) card pairings.
 
-The concept behind it is simple enough:
+**Concept explained:**
 
 The user specifies the cards they want to include (from one to three).
 
 The program verifies that those selected cards are valid by comparing them against an internal pool of cards.
 
-For each valid preferred card, the program looks in a synergy dictionary to find companion cards that are known (or are suspected) to work well with that card.
+For each valid preferred card, the program looks in a synergy dictionary to find companion cards that are known to work well with that card.
 
 After synergy cards have been added, the system completely fills the remaining deck slots (with a limit of eight total) with random selections from the remaining pool, thus ensuring a full deck.
 
-This STR(X) application implements a simple synergy dictionary in its first version. I highly encourage you to expand on it or even connect it to a more advanced algorithm that can give each of the Clash Royale cards a role (tank, DPS, splash, building, spell, etc.). This would enable deeper synergy detection—for example, nudging the user to combine a strong ground troop with an air troop synergy or making sure at least one or two spells to control the crowd exist.
+This STR(x) application implements a simple synergy dictionary in its first version. Another way to advance the system is to assign each Clash Royale card a specific role such as the bomb tower as a building or the giant as tank. This would in theory create better decks, however this did not align with our goal of generating purely random decks. Nonetheless, it is something to consider if we were to improve the code and deck generator to produce more effective decks. 
 
-_**The Project Files and What They Do**_
+**Projec files and functions:**
 
 - project.py: This file holds the primary logic of that program. It holds:
 
 - The main() function asks the user for their favorite cards, calls our helper functions, and outputs the resulting deck.
 
-- validate_cards(preferred_cards): Verifies if all user-typed card numbers exist in the list of known cards. It returns a list of invalid entries if there are any invalid cards.
+- validate_cards(preferred_cards): verifies if all user-typed card numbers exist in the list of known cards. It returns a list of invalid entries if there are any invalid cards.
 
 - get_synergy_cards(card): searches for synergy relationships in our dictionary for a card. When the card is identified, it returns a generated list of partner cards.
 
@@ -66,19 +64,23 @@ Test_validate_cards() ensures that valid card names pass and flags invalid ones.
 
 - requirements.txt: This is a plain text file that contains any libraries or frameworks that this project needs to run. On the other hand, here, the only external dependency is PyTest for testing. But as you grow the project—say, by adding a web framework like Flask—you’d attach that to this file so that others can install all dependencies easily.
 
-_**Design Choices and Thoughts**_
-
 **Synergy Dictionary**
-One of the design elements we have is our synergy dictionary, SYNERGY_DICT. We’ve defined a few similar cards like “Hog Rider” and “Giant” to complement the cards. This is, of course, an oversimplification of the actual synergy map of Clash Royale, but it shows how the logic could scale. On the other hand, if you like looking at cold data, you may scrape the previous aspect of how often different cards in the same card list of the strongest games in the game come with external data.
+
+One of the design elements we have is our synergy dictionary, SYNERGY_DICT. We’ve defined a few similar cards like “Hog Rider” and “Giant” to complement the cards. This is an oversimplification of the actual synergy map of Clash Royale, but it shows how the logic could scale.
 
 **Randomness**
+
 After adding synergy cards to the deck, randomly select up to eight cards from the available card pool. Particularly, this means that although these types of cards provide a degree of variety, players may see certain archetypes repeating if a small dictionary is used or if synergy cards are not strong enough. One future improvement might be to track roles (e.g., building-targeting, anti-air, splash-damage) to keep the decks balanced.
 
 **Testing**
+
 We chose PyTest, as it is a a lightweight and powerful testing framework that integrates with Python pretty well. Our tests are quite simple, but they provide a solid baseline to check that the basic functionality still works as expected when the code changes.
 
 **How to Install and Run**
+
 Clone or download the repository from GitHub, making sure to include project.py, test_project.py, requirements.txt, and README. All of these (e.g., apples and oranges as well as md` itself) are located in the root directory.
 
 **Install Dependencies: Run**
+
 pip install -r requirements.txt
+
