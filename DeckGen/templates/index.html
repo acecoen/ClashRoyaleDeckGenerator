@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Clash Royale Deck Builder</title>
+    <!-- Bootstrap CSS via CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      body {
+        margin: 20px;
+        /* Background image – place your desired image as background.jpg in static/images/ */
+        background: url("{{ url_for('static', filename='images/background.jpg') }}") no-repeat center center fixed;
+        background-size: cover;
+      }
+      .card-img {
+        width: 100px;
+        height: auto;
+        border: 1px solid #ddd;
+        padding: 5px;
+        background: #fff;
+        border-radius: 5px;
+      }
+      .logo {
+        max-width: 150px;
+        margin: 10px;
+      }
+      .header {
+        margin-bottom: 30px;
+      }
+      /* Cool heading style */
+      .cool-heading {
+        color: white;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        font-size: 2.5rem;
+        text-align: center;
+      }
+      .card-details {
+        font-weight: bold;
+      }
+      .card-info {
+        font-size: 0.9rem;
+      }
+      .card-container {
+        background-color: rgba(255, 255, 255, 0.85);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header with logos -->
+      <div class="row header align-items-center">
+        <div class="col-md-3 text-center">
+          <img src="{{ url_for('static', filename='images/supercell_logo.png') }}" alt="Supercell Logo" class="logo">
+        </div>
+        <div class="col-md-6 text-center">
+          <h1 class="cool-heading">Clash Royale Deck Builder</h1>
+        </div>
+        <div class="col-md-3 text-center">
+          <img src="{{ url_for('static', filename='images/cr_logo.png') }}" alt="Clash Royale Logo" class="logo">
+        </div>
+      </div>
+      
+      <!-- Available Cards Section -->
+      <div class="card-container">
+        <h3>Available Cards</h3>
+        <div class="row">
+          {% for card in card_pool %}
+            <div class="col-md-2 text-center mb-3">
+              <img src="{{ url_for('static', filename='images/cards/' ~ card|replace(' ', '_') ~ '.png') }}" alt="{{ card }}" class="card-img">
+              <p class="card-details">{{ card }}</p>
+              <p class="card-info">
+                Elixir: {{ card_data[card]['elixir'] }}<br>
+                Rarity: {{ card_data[card]['rarity'] }}<br>
+                Type: {{ card_data[card]['type'] }}
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      
+      <!-- Form for User Input -->
+      {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endif %}
+      <div class="card-container">
+        <form method="post">
+          <div class="form-group">
+            <label for="cards">Enter 1 to 3 of your favorite cards (comma separated):</label>
+            <input type="text" id="cards" name="cards" class="form-control" placeholder="e.g., Hog Rider, Miner">
+          </div>
+          <button type="submit" class="btn btn-primary">Generate Deck</button>
+        </form>
+      </div>
+      
+      <!-- Generated Deck Section -->
+      {% if deck %}
+        <div class="card-container">
+          <h2>Your Generated Deck</h2>
+          <div class="row">
+            {% for card in deck %}
+              <div class="col-md-3 text-center mb-3">
+                <img src="{{ url_for('static', filename='images/cards/' ~ card|replace(' ', '_') ~ '.png') }}" alt="{{ card }}" class="card-img">
+                <p class="card-details">{{ card }}</p>
+                <p class="card-info">
+                  Elixir: {{ card_data[card]['elixir'] }}<br>
+                  Rarity: {{ card_data[card]['rarity'] }}<br>
+                  Type: {{ card_data[card]['type'] }}
+                </p>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
