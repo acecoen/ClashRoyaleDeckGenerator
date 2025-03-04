@@ -1,86 +1,64 @@
-**Project**: Clash Royale Deck-Builder Project
+# Clash Royale Deck Builder
+#### Video Demo: [URL]
+---
 
-**VIDEO DEMONSTRATION:**
+## Overview
 
-**Description**
+The Clash Royale Deck Builder is a Python-based application that helps players create Clash Royale decks. By allowing users to choose between one and three cards, the project uses a synergy map system to fill out the remainder of the 8-card deck. 
+We defined a `main()` function within **project.py**, alongside custom functions that handle core tasks such as: 
+`validate_cards`, 
+`get_synergy_cards`,
+`generate_deck.`
+All of the functions are tested in **test_project.py** using pytest. Libraries beyond the Python standard library are listed in **requirements.txt**, enabling anyone to install and run the application.
 
-This is the Clash Royale Deck-Builder Project, where the aim of the project is to create a Python-based code that will create custom decks based on 1-3 user-chosen cards for the game Clash Royale. Using a synergy system, this project lets users build their decks by allowing them to add cards they want to use while making sure their individual synergies work together. The generated deck includes eight cards, with the user-specified cards at its center. 
+---
 
-**Structure & Functions**
+## Files and Their Roles
 
-project.mainloop() contains the main logic.py, which has a main()` function driving the user interface and program flow.
+- **project.py**  
+Project.py contains the `main()` function. When you run `python project.py,` you are prompted to input 1–3 cards. Afterward, the script checks your card selection for validity (ensuring each card exists in our defined card pool), retrieves synergy cards based on that selection, and fills the deck to eight cards using a combination of synergy logic and random draws from the remaining pool. 
+Three central functions: `validate_cards`, `get_synergy_cards`, and `generate_deck` helps the process flow.
 
--- There are three other top-level (i.e., not nested) functions in project.py that deal with all main functionalities:`
+**test_project.py**  
+Each key function in **project.py** has a corresponding test method that checks for correct outcomes.
+For example, `test_generate_deck` verifies that the final deck always has eight different cards, while `test_validate_cards` confirms that invalid user inputs (like misspelled or nonexistent cards) are denied. 
 
-`Hashes are as mentioned above: validate_cards(preferred_cards):
+**requirements.txt**  
+Flask is included here for the web interface, and pytest is required to run the test suite. These installments ensure that every aspect of the application—from card validation to synergy-driven deck assembly—functions consistently.
 
+**app.py**  
+Running `python app.py` will bring up a website where you can select your favorite cards in a form. The server then calls functions from **project.py** to generate a deck at the bottom of the page. This file allows our code to be visualized and presented with colors, bold texts, images, etc. 
+
+**templates/index.html** and **static**   
+The web interface’s visual components exist within **templates/index.html** (for structure and layout) and **static** (for images and optional CSS files). The card images must follow a strict naming convention such as how “Hog Rider” becomes “Hog_Rider.png.” This allows for a seamless interaction between the image and code function.
+
+—--
+
+## Core Logic and Design Choices
+
+### Data Structures
+For the application to quickly access the data it needs, we placed card attributes (elixir cost, rarity, and type) in a dictionary called CARDS_DATA.
+Another dictionary called SYNERGY maps each card to a list of recommended cards. For example, if a user selects “Golem,” the program will automatically suggest related cards such as “Baby Dragon” or “Night Witch” to create effective deck combinations. 
+
+### Functions and Testing
+In **project.py**, three functions work together:
+validate_cards(user_cards)
+Validates the presence of each user-selected card in our dataset. The function returns False for unrecognized cards.
 get_synergy_cards(card)
+Gets synergy suggestions for a single card. Otherwise, we return an empty list to prevent unknowns from entering the data , as we do not have synergies with such cards.
+generate_deck(user_cards)
+First, it checks that the user has chosen between 1 and 3 valid cards. It then adds any relevant synergy cards to the deck and fills the remainder of the slots with random cards until the deck size is eight. 
+Test_project is where all these functions are tested. All test functions verify typical usage along with edge cases like user-defined, invalid card names, or excess user-defined cards (cards selected) to ensure that the deck builder continues to work normally.
 
-build_deck(preferred_cards)
+---
 
-**Testing with pytest**
+## Challenges and Future Improvements
+Card picture naming proved surprisingly challenging. Forgetting to rename files like “Hog Rider. png” to “Hog_Rider. png” broken web interface images because, in our code, spaces are automatically replaced with underscores. It is quite difficult to balance how many synergy cards to add before just throwing in the random cards. An excess of them can yield repetitive, predictable decks; too few, and the strategic matches can be overlooked.
 
-project: We have at least three custom functions in here. py that are extensively tested in test_project. py using pytest.
+—--
 
-To test each function, name the test function according to test_.
+## Conclusion
+In summary, the **Clash Royale Deck Builder** uses data structures, synergy-based logic, and testing to create randomized decks for Clash Royale players. **project.py**allows users to generate decks directly in the console, while **app.py** presents an interface for a more image-rich experience. Design choices such as a synergy dictionary, random card filling, and naming conventions ensure that every deck generated is unique and effective in-game.  
+The`main()` function contained custom functions, and a **requirements.txt** that captures all dependencies. Thank you for reading, and happy deck building!
 
-**Packaging & Requirements**
-The requirements.txt file in the project's root folder contains all the external or pip-installable libraries we depend on. For instance, in this file we have included pytest because we use that to run our test suite.
-
-**Project Description**
-The Clash Royale Deck-Builder Project is a deck generator that put cards together based on a synergy dictionary. Clash Royale is a Supercell mobile game where players fight opponents using decks of eight cards. Deck-building is involved combining of tanks, support units, spells, and defensive buildings. We automated part of the synergy logic, providing users a straightforward way to find new (or less obvious) card pairings.
-
-**Concept explained:**
-
-The user specifies the cards they want to include (from one to three).
-
-The program verifies that those selected cards are valid by comparing them against an internal pool of cards.
-
-For each valid preferred card, the program looks in a synergy dictionary to find companion cards that are known to work well with that card.
-
-After synergy cards have been added, the system completely fills the remaining deck slots (with a limit of eight total) with random selections from the remaining pool, thus ensuring a full deck.
-
-This STR(x) application implements a simple synergy dictionary in its first version. Another way to advance the system is to assign each Clash Royale card a specific role such as the bomb tower as a building or the giant as tank. This would in theory create better decks, however this did not align with our goal of generating purely random decks. Nonetheless, it is something to consider if we were to improve the code and deck generator to produce more effective decks. 
-
-**Projec files and functions:**
-
-- project.py: This file holds the primary logic of that program. It holds:
-
-- The main() function asks the user for their favorite cards, calls our helper functions, and outputs the resulting deck.
-
-- validate_cards(preferred_cards): verifies if all user-typed card numbers exist in the list of known cards. It returns a list of invalid entries if there are any invalid cards.
-
-- get_synergy_cards(card): searches for synergy relationships in our dictionary for a card. When the card is identified, it returns a generated list of partner cards.
-
-- Build_deck(preferred_cards): This function combines user-selected cards, synergy suggestions, and random selections (if necessary) to create a full deck of eight cards.
-
-- test_project.py: The code contains a set of pytest-based unit tests that verify the correct functioning of each of our three bespoke functions. Not only does this confirm that the program works as it should, but it also showcases the best practice of test-driven or test-influenced development.
-
-Test_validate_cards() ensures that valid card names pass and flags invalid ones.
-
-- test_get_synergy_cards(): returns previously stored synergy cards for known cards, while non-displayed cards have empty results and unknown cards return only an empty card.
-
-- Test_build_deck(): confirms the creation of an 8-card deck with user-selected cards, synergy suggestions, and random fillers.
-
-- requirements.txt: This is a plain text file that contains any libraries or frameworks that this project needs to run. On the other hand, here, the only external dependency is PyTest for testing. But as you grow the project—say, by adding a web framework like Flask—you’d attach that to this file so that others can install all dependencies easily.
-
-**Synergy Dictionary**
-
-One of the design elements we have is our synergy dictionary, SYNERGY_DICT. We’ve defined a few similar cards like “Hog Rider” and “Giant” to complement the cards. This is an oversimplification of the actual synergy map of Clash Royale, but it shows how the logic could scale.
-
-**Randomness**
-
-After adding synergy cards to the deck, randomly select up to eight cards from the available card pool. Particularly, this means that although these types of cards provide a degree of variety, players may see certain archetypes repeating if a small dictionary is used or if synergy cards are not strong enough. One future improvement might be to track roles (e.g., building-targeting, anti-air, splash-damage) to keep the decks balanced.
-
-**Testing**
-
-We chose PyTest, as it is a a lightweight and powerful testing framework that integrates with Python pretty well. Our tests are quite simple, but they provide a solid baseline to check that the basic functionality still works as expected when the code changes.
-
-**How to Install and Run**
-
-Clone or download the repository from GitHub, making sure to include project.py, test_project.py, requirements.txt, and README. All of these (e.g., apples and oranges as well as md` itself) are located in the root directory.
-
-**Install Dependencies: Run**
-
-pip install -r requirements.txt
 
