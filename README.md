@@ -1,5 +1,8 @@
 # Clash Royale Deck Builder
 #### Video Demo: [URL]
+Coders:
+- Alessandro Coen
+- Kenneth Wiguna
 ---
 
 ## Overview
